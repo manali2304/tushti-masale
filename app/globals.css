@@ -504,3 +504,70 @@ body {
   border-color: #3d1f0a;
   color: #e8d5a3;
 }
+
+@media (max-width: 768px) {
+
+  /* Navbar */
+  .navbar {
+    padding: 1rem 1.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .navbar-links {
+    gap: 1.5rem;
+  }
+
+  /* Homepage */
+  .homepage {
+    padding-top: 100px;
+    padding-bottom: 2rem;
+  }
+
+  .homepage-title {
+    font-size: 2.5rem;
+  }
+
+  .home-sub {
+    font-size: 0.9rem;
+    padding: 0 1.5rem;
+  }
+
+  /* Products */
+  .products {
+    padding: 4rem 1.5rem;
+  }
+
+  .products-grid-top {
+    grid-template-columns: 1fr;
+  }
+
+  .products-grid-bottom {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .card-img-wrap {
+    height: 280px;
+  }
+
+  /* Contact */
+  .contact {
+    padding: 4rem 1.5rem;
+  }
+
+  .contact-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact-title {
+    font-size: 2rem;
+  }
+}
