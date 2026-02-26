@@ -1,5 +1,7 @@
+'use client'
+
 import Image from "next/image";
-import { useState } from "react"
+import { useState } from "react";
 
 const products = [
   {
@@ -9,10 +11,10 @@ const products = [
     desc: "Golden, earthy, and deeply aromatic. Essential in every Indian kitchen for both flavour and health. Our turmeric is stone-ground to preserve its natural oils and curcumin content.",
     image: "/turmeric.png",
     sizes: [
-        {weight: "200g", price: "₹80"},
-        {weight: "500g", price: "₹95"},
-        {weight: "1Kg", price: "₹190"}
-    ]
+      { weight: "200g", price: "₹80" },
+      { weight: "500g", price: "₹95" },
+      { weight: "1Kg", price: "₹190" },
+    ],
   },
   {
     id: 2,
@@ -21,10 +23,10 @@ const products = [
     desc: "Bold, fiery, and vibrant red. Adds authentic heat and rich colour to every dish. Made from sun-dried red chillies, ground fresh to lock in maximum flavour and aroma.",
     image: "/mirch.png",
     sizes: [
-        {weight: "200g", price: "₹90"},
-        {weight: "500g", price: "₹135"},
-        {weight: "1Kg", price: "₹270"}
-    ]
+      { weight: "200g", price: "₹90" },
+      { weight: "500g", price: "₹135" },
+      { weight: "1Kg", price: "₹270" },
+    ],
   },
   {
     id: 3,
@@ -33,10 +35,10 @@ const products = [
     desc: "Mild, citrusy, and wonderfully fragrant. The backbone of countless Indian gravies and curries. Slow-roasted before grinding for a deeper, more complex flavour.",
     image: "/coriander.png",
     sizes: [
-        {weight: "200g", price: "₹70"},
-        {weight: "500g", price: "₹80"},
-        {weight: "1Kg", price: "₹155"}
-    ]
+      { weight: "200g", price: "₹70" },
+      { weight: "500g", price: "₹80" },
+      { weight: "1Kg", price: "₹155" },
+    ],
   },
   {
     id: 4,
@@ -45,10 +47,10 @@ const products = [
     desc: "Warm, nutty, and deeply aromatic. Perfect for tempering, breads, and spice blends. Hand-cleaned and carefully dried to preserve their essential oils and fragrance.",
     image: "/cumin.png",
     sizes: [
-        {weight: "200g", price: "₹100"},
-        {weight: "500g", price: "₹160"},
-        {weight: "1Kg", price: "₹320"}
-    ]
+      { weight: "200g", price: "₹100" },
+      { weight: "500g", price: "₹160" },
+      { weight: "1Kg", price: "₹320" },
+    ],
   },
   {
     id: 5,
@@ -57,20 +59,64 @@ const products = [
     desc: "Sharp, pungent, and full of character. Crackling mustard seeds are the very foundation of South Indian cooking. Sorted by hand for consistent quality in every pack.",
     image: "/mustard.png",
     sizes: [
-        {weight: "200g", price: "₹60"},
-        {weight: "500g", price: "₹75"},
-        {weight: "1Kg", price: "₹150"}
-    ]
+      { weight: "200g", price: "₹60" },
+      { weight: "500g", price: "₹75" },
+      { weight: "1Kg", price: "₹150" },
+    ],
   },
 ];
 
-function ProductCard({ product }: { product: typeof products[0] }) {
-  const [selectedSize, setSelectedSize] = useState(0)
+function ProductCard({ product }: { product: (typeof products)[0] }) {
+  const [selectedSize, setSelectedSize] = useState(0);
 
+  const handleBuy = async () => {
+    const selectedProduct = product.sizes[selectedSize];
+    const amountInRupees = parseInt(selectedProduct.price.replace("₹", ""));
+
+    const customerName = prompt("Enter your name");
+    const customerEmail = prompt("Enter your email");
+    const customerPhone = prompt("Enter your contact number");
+
+    try {
+      const res = await fetch("/api/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: amountInRupees,
+          productName: product.name,
+          size: selectedProduct.weight,
+          customerName,
+          customerEmail,
+          customerPhone,
+        }),
+      });
+
+      const order = await res.json();
+      console.log("Order created :" + order);
+
+      const cashfree = (window as any).Cashfree({
+        mode: "sandbox",
+      });
+
+      cashfree.checkout({
+        paymentSessionId: order.payment_session_id,
+        returnUrl: `${window.location.origin}/payment-success`,
+      });
+
+    } catch {
+      console.error("Couldn't complete the payment");
+      alert("Something went wrong. Please try again.");
+    }
+  };
   return (
     <div className="product-card">
       <div className="card-img-wrap">
-        <Image src={product.image} alt={product.name} fill className="packet-img"/>
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="packet-img"
+        />
         <span className="card-badge">✓ 100% Pure</span>
       </div>
       <div className="card-body">
@@ -81,7 +127,7 @@ function ProductCard({ product }: { product: typeof products[0] }) {
           {product.sizes.map((size, index) => (
             <button
               key={size.weight}
-              className={`size-btn ${selectedSize === index ? 'size-btn-active' : ''}`}
+              className={`size-btn ${selectedSize === index ? "size-btn-active" : ""}`}
               onClick={() => setSelectedSize(index)}
             >
               {size.weight}
@@ -90,13 +136,20 @@ function ProductCard({ product }: { product: typeof products[0] }) {
         </div>
         <div className="card-footer">
           <div>
-            <div className="card-price">{product.sizes[selectedSize].price}</div>
-            <div className="card-weight">{product.sizes[selectedSize].weight}</div>
+            <div className="card-price">
+              {product.sizes[selectedSize].price}
+            </div>
+            <div className="card-weight">
+              {product.sizes[selectedSize].weight}
+            </div>
+            <button className="card-btn" onClick={handleBuy}>
+            Buy Now
+          </button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default function Products() {
@@ -104,7 +157,9 @@ export default function Products() {
     <section className="products" id="masalas">
       <div className="section-header">
         <p className="section-tag">— Our Collection</p>
-        <h2 className="section-title">Five <em>Essentials</em></h2>
+        <h2 className="section-title">
+          Five <em>Essentials</em>
+        </h2>
         <div className="section-divider"></div>
       </div>
       <div className="products-grid-top">
@@ -118,5 +173,5 @@ export default function Products() {
         ))}
       </div>
     </section>
-  )
+  );
 }

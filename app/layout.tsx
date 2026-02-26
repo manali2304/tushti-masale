@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -30,9 +31,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
-        className={`${cormorant.variable} ${dmSans.variable} antialiased`}
-      >
+        className={`${cormorant.variable} ${dmSans.variable} antialiased`}>
         {children}
+        <Script src="https://sdk.cashfree.com/js/v3/cashfree.js" />
       </body>
     </html>
   );

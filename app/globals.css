@@ -318,6 +318,7 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
+  margin-top: 0.9rem;
   border-radius: 4px;
   transition:
     background 0.2s,
