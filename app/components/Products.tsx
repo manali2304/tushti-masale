@@ -9,9 +9,9 @@ const products = [
     desc: "Golden, earthy, and deeply aromatic. Essential in every Indian kitchen for both flavour and health. Our turmeric is stone-ground to preserve its natural oils and curcumin content.",
     image: "/turmeric.png",
     sizes: [
-        {weight: "200g", price: "₹80"},
-        {weight: "500g", price: "₹95"},
-        {weight: "1Kg", price: "₹190"}
+        {weight: "200g", price: "₹120"},
+        {weight: "500g", price: "₹240"},
+        {weight: "1Kg", price: "₹430"}
     ]
   },
   {
@@ -21,9 +21,9 @@ const products = [
     desc: "Bold, fiery, and vibrant red. Adds authentic heat and rich colour to every dish. Made from sun-dried red chillies, ground fresh to lock in maximum flavour and aroma.",
     image: "/mirch.png",
     sizes: [
-        {weight: "200g", price: "₹90"},
-        {weight: "500g", price: "₹135"},
-        {weight: "1Kg", price: "₹270"}
+        {weight: "200g", price: "₹140"},
+        {weight: "500g", price: "₹280"},
+        {weight: "1Kg", price: "₹510"}
     ]
   },
   {
@@ -33,9 +33,9 @@ const products = [
     desc: "Mild, citrusy, and wonderfully fragrant. The backbone of countless Indian gravies and curries. Slow-roasted before grinding for a deeper, more complex flavour.",
     image: "/coriander.png",
     sizes: [
-        {weight: "200g", price: "₹70"},
-        {weight: "500g", price: "₹80"},
-        {weight: "1Kg", price: "₹155"}
+        {weight: "200g", price: "₹110"},
+        {weight: "500g", price: "₹220"},
+        {weight: "1Kg", price: "₹390"}
     ]
   },
   {
@@ -45,9 +45,9 @@ const products = [
     desc: "Warm, nutty, and deeply aromatic. Perfect for tempering, breads, and spice blends. Hand-cleaned and carefully dried to preserve their essential oils and fragrance.",
     image: "/cumin.png",
     sizes: [
-        {weight: "200g", price: "₹100"},
-        {weight: "500g", price: "₹160"},
-        {weight: "1Kg", price: "₹320"}
+        {weight: "200g", price: "₹160"},
+        {weight: "500g", price: "₹320"},
+        {weight: "1Kg", price: "₹570"}
     ]
   },
   {
@@ -57,9 +57,9 @@ const products = [
     desc: "Sharp, pungent, and full of character. Crackling mustard seeds are the very foundation of South Indian cooking. Sorted by hand for consistent quality in every pack.",
     image: "/mustard.png",
     sizes: [
-        {weight: "200g", price: "₹60"},
-        {weight: "500g", price: "₹75"},
-        {weight: "1Kg", price: "₹150"}
+        {weight: "200g", price: "₹90"},
+        {weight: "500g", price: "₹180"},
+        {weight: "1Kg", price: "₹320"}
     ]
   },
 ];
@@ -74,7 +74,6 @@ function ProductCard({ product }: { product: typeof products[0] }) {
         <span className="card-badge">✓ 100% Pure</span>
       </div>
       <div className="card-body">
-        <div className="card-origin">{product.origin}</div>
         <div className="card-name">{product.name}</div>
         <div className="card-desc">{product.desc}</div>
         <div className="size-selector">
@@ -117,6 +116,7 @@ export default function Products() {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      <p className="disclaimer">* All product images are for illustration purposes only. Actual packaging may vary.</p>
     </section>
   )
 }
